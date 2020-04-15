@@ -3,6 +3,7 @@ import ListItem from './ListItem';
 import Add from './Add';
 import AddNote from './AddNote';
 import EditNote from './EditNote';
+import DeleteNote from './DeleteNote';
 import Status from './Status';
 import Search from './Search';
 
@@ -15,6 +16,8 @@ class List extends React.Component {
         message: '',
         showStatus: false,
         className: '',
+        showDelete: false,
+        showDeleteFor: 0,
         notes: [
             {
                 id: 1,
@@ -54,14 +57,6 @@ class List extends React.Component {
         ]
     }
 
-    DeleteNote = (id) => {
-        const { notes } = this.state;
-        let updatedNotes = notes.filter(note => note.id !== id);
-        this.setState({
-            notes: updatedNotes
-        });
-    }
-
     showAdd = () => {
         this.setState({ showAdd: !this.state.showAdd });
     }
@@ -70,6 +65,28 @@ class List extends React.Component {
         this.setState({
             showEdit: !this.state.showEdit,
             showEditFor: id
+        });
+    }
+
+    showDelete = (id) => {
+        this.setState({
+            showDelete: !this.state.showDelete,
+            showDeleteFor: id
+        });
+    }
+
+    DeleteNote = () => {
+        const { notes } = this.state;
+        let updatedNotes = notes.filter(note => note.id !== this.state.showDeleteFor);
+        this.setState({
+            notes: updatedNotes,
+            showDelete: !this.state.showDelete
+        });
+    }
+
+    cancelDelete = () => {
+        this.setState({
+            showDelete: !this.state.showDelete
         });
     }
 
@@ -173,7 +190,7 @@ class List extends React.Component {
                             </thead>
                             <tbody>
                                 {notes.map((note) =>
-                                    <ListItem key={note.id} data={note} deleteNote={() => { this.DeleteNote(note.id) }} showEditForm={this.showEdit} />
+                                    <ListItem key={note.id} data={note} showDelete={this.showDelete} showEditForm={this.showEdit} />
                                 )}
                             </tbody>
                         </table>
@@ -181,6 +198,7 @@ class List extends React.Component {
                     <Add showForm={this.showAdd} />
                     {this.state.showAdd ? <AddNote addNote={this.AddNote} /> : null}
                     {this.state.showEdit ? <EditNote editNote={this.EditNote} /> : null}
+                    {this.state.showDelete ? <DeleteNote delete={this.DeleteNote} cancel={this.cancelDelete} /> : null}
                 </div>
             </div>
         )

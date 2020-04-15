@@ -13,7 +13,7 @@ class ListItem extends React.Component {
                 <td>{updatedAt}</td>
                 <td>
                     <i className="fas fa-2x fa-edit text-primary" onClick={() => { this.props.showEditForm(id) }}></i>
-                    <i className="fas fa-2x fa-trash-alt text-danger" onClick={() => { this.props.deleteNote() }}></i>
+                    <i className="fas fa-2x fa-trash-alt text-danger" onClick={() => { this.props.showDelete(id) }}></i>
                 </td>
             </tr>
         )
