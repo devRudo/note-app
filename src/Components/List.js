@@ -18,6 +18,7 @@ class List extends React.Component {
         className: '',
         showDelete: false,
         showDeleteFor: 0,
+        searchString: '',
         notes: [
             {
                 id: 1,
@@ -158,19 +159,17 @@ class List extends React.Component {
     }
 
     search = (data) => {
-        console.log(data.searchString);
-        const { notes } = this.state;
-        let found = notes.filter(note => note.title.toLowerCase().includes(data.searchString.toLowerCase()));
-        console.log(found);
-        if (found) {
-            this.setState({
-                notes: found
-            });
-        }
+        this.setState({
+            searchString: data.searchString
+        });
     }
 
     render() {
-        const { notes } = this.state;
+        let { notes } = this.state;
+        if (this.state.searchString) {
+            notes = notes.filter(note => note.title.toLowerCase().includes(this.state.searchString.toLowerCase()));
+            console.log(notes);
+        }
         return (
             <div className="container">
                 <Search search={this.search} />
