@@ -24,7 +24,7 @@ class List extends React.Component {
                 id: 1,
                 title: 'First',
                 desc: 'This is first note',
-                createdAt: Date.now(),
+                createdAt: Date().split('GMT')[0], // getting the idea from siddiah
                 updatedAt: Date.now()
             },
             {
@@ -92,7 +92,7 @@ class List extends React.Component {
     }
 
     AddNote = (data) => {
-        if (data.title !== '' && data.desc !== '') {
+        if (data.title && data.desc) {
             const { notes } = this.state;
             notes.push({
                 id: this.state.notes.length + 1,
@@ -168,7 +168,6 @@ class List extends React.Component {
         let { notes } = this.state;
         if (this.state.searchString) {
             notes = notes.filter(note => note.title.toLowerCase().includes(this.state.searchString.toLowerCase()));
-            console.log(notes);
         }
         return (
             <div className="container">
