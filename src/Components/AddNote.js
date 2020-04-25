@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 class AddNote extends React.Component {
-    state = {
-        title: '',
-        desc: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            desc: '',
+        }
     }
 
     onTitleChange = (e) => {
@@ -29,7 +32,7 @@ class AddNote extends React.Component {
             <form action="/" className="form card shadow-lg p-4" onSubmit={this.submit.bind(this)}>
                 <div className="form-group">
                     <label htmlFor="title">Title</label>
-                    <input type="text" name="title" itemID="title" className="form-control" placeholder="Add a title for this note ...." onChange={this.onTitleChange.bind(this)} />
+                    <input type="text" name="title" itemID="title" className="form-control" placeholder="Add a title for this note ...." onChange={this.onTitleChange.bind(this)} autoFocus />
                 </div>
                 <div className="form-group">
                     <label htmlFor="desc">Description</label>
@@ -37,7 +40,7 @@ class AddNote extends React.Component {
                 </div>
                 <button type="submit" className="btn btn-primary">Add Note</button>
             </form>
-        )
+        );
     }
 }
 

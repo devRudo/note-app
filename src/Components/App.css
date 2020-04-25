@@ -12,6 +12,14 @@
     z-index: 1;
 }
 
+.editForm{
+    z-index: 2;
+}
+
+.addForm {
+    z-index: 2;
+}
+
 .delete {
     position: absolute;
     top: 50%;

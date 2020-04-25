@@ -5,13 +5,13 @@ class Search extends React.Component {
         searchString: ''
     }
 
-    searchString = async (e) => {
-        // Issue with search resolved by Pawan while review
+    searchString = (e) => {
         e.preventDefault();
-        await this.setState({
+        this.setState({
             searchString: e.target.value
+        }, () => {
+            this.props.search(this.state);
         });
-        this.props.search(this.state);
     }
 
     submit = (e) => {
@@ -20,7 +20,7 @@ class Search extends React.Component {
     }
     render() {
         return (
-            <form action="/" className="row mt-4" onSubmit={this.submit.bind(this)}>
+            <form className="row mt-4" onSubmit={this.submit.bind(this)}>
                 <div className="input-group mb-3 col-md-6">
                     <input type="text" name="title" id="title" className="form-control" placeholder="Search Note by title..." aria-label="Search note by title" aria-describedby="search" onChange={this.searchString.bind(this)} />
                     <div className="input-group-append">
@@ -28,7 +28,7 @@ class Search extends React.Component {
                     </div>
                 </div>
             </form>
-        )
+        );
     }
 }
 

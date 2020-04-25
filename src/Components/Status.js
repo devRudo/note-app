@@ -1,15 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-class Status extends React.Component {
-    render() {
-        return (
-            <div className="col-md-12">
-                <div className={'alert ' + this.props.className}>
-                    <p>{this.props.message}</p>
-                </div>
+const Status = (props) => {
+    return (
+        <div className="col-md-12">
+            <div className={'alert ' + props.className}>
+                <p>{props.message}</p>
             </div>
-        )
-    }
+        </div>
+    );
 }
 
 export default Status;

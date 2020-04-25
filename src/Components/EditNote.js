@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 class EditNote extends React.Component {
-
-    state = {
-        title: '',
-        desc: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: props.note.title,
+            desc: props.note.desc
+        }
     }
 
     onTitleChange = (e) => {
@@ -16,7 +18,7 @@ class EditNote extends React.Component {
     onDescChange = (e) => {
         this.setState({
             desc: e.target.value
-        })
+        });
     }
 
     submit = (e) => {
@@ -27,18 +29,18 @@ class EditNote extends React.Component {
 
     render() {
         return (
-            <form action="/" className="form card shadow-lg p-4" onSubmit={this.submit.bind(this)}>
+            <form className="form card shadow-lg p-4 editForm" onSubmit={this.submit.bind(this)}>
                 <div className="form-group">
                     <label htmlFor="title">Title</label>
-                    <input type="text" name="title" itemID="title" className="form-control" placeholder="Add a title for this note ...." onChange={this.onTitleChange.bind(this)} value={this.props.title} />
+                    <input type="text" name="title" itemID="title" className="form-control" placeholder="Add a title for this note ...." onChange={this.onTitleChange.bind(this)} value={this.state.title} autoFocus />
                 </div>
                 <div className="form-group">
                     <label htmlFor="desc">Description</label>
-                    <input type="text" name="desc" itemID="desc" className="form-control" placeholder="Add description for this note ...." onChange={this.onDescChange.bind(this)} value={this.props.desc} />
+                    <input type="text" name="desc" itemID="desc" className="form-control" placeholder="Add description for this note ...." onChange={this.onDescChange.bind(this)} value={this.state.desc} />
                 </div>
                 <button type="submit" className="btn btn-primary">Save</button>
             </form>
-        )
+        );
     }
 }
 

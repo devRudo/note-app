@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import ListItem from './ListItem';
 import Add from './Add';
 import AddNote from './AddNote';
@@ -21,39 +22,39 @@ class List extends React.Component {
         searchString: '',
         notes: [
             {
-                id: 1,
+                id: uuidv4(),
                 title: 'First',
                 desc: 'This is first note',
                 createdAt: Date().split('GMT')[0], // getting the idea from siddiah
-                updatedAt: Date.now()
+                updatedAt: Date().split('GMT')[0]
             },
             {
-                id: 2,
+                id: uuidv4(),
                 title: 'Second',
                 desc: 'This is second note',
-                createdAt: Date.now(),
-                updatedAt: Date.now()
+                createdAt: Date().split('GMT')[0],
+                updatedAt: Date().split('GMT')[0]
             },
             {
-                id: 3,
+                id: uuidv4(),
                 title: 'Third',
                 desc: 'This is third note',
-                createdAt: Date.now(),
-                updatedAt: Date.now()
+                createdAt: Date().split('GMT')[0],
+                updatedAt: Date().split('GMT')[0]
             },
             {
-                id: 4,
+                id: uuidv4(),
                 title: 'Fourth',
                 desc: 'This is fourth note',
-                createdAt: Date.now(),
-                updatedAt: Date.now()
+                createdAt: Date().split('GMT')[0],
+                updatedAt: Date().split('GMT')[0]
             },
             {
-                id: 5,
+                id: uuidv4(),
                 title: 'Fifth',
                 desc: 'This is fifth note',
-                createdAt: Date.now(),
-                updatedAt: Date.now()
+                createdAt: Date().split('GMT')[0],
+                updatedAt: Date().split('GMT')[0]
             },
         ]
     }
@@ -76,7 +77,7 @@ class List extends React.Component {
         });
     }
 
-    DeleteNote = () => {
+    deleteNote = () => {
         const { notes } = this.state;
         let updatedNotes = notes.filter(note => note.id !== this.state.showDeleteFor);
         this.setState({
@@ -91,18 +92,18 @@ class List extends React.Component {
         });
     }
 
-    AddNote = (data) => {
+    addNote = (data) => {
         if (data.title && data.desc) {
             const { notes } = this.state;
-            notes.push({
-                id: this.state.notes.length + 1,
+            let updatedNotes = notes.concat({
+                id: uuidv4(),
                 title: data.title,
                 desc: data.desc,
-                createdAt: Date.now(),
-                updatedAt: Date.now()
+                createdAt: Date().split('GMT')[0],
+                updatedAt: Date().split('GMT')[0]
             })
             this.setState({
-                notes: notes,
+                notes: updatedNotes,
                 className: "alert-success",
                 message: "Added Successfully",
                 showAdd: false,
@@ -124,14 +125,14 @@ class List extends React.Component {
         }, 2000);
     }
 
-    EditNote = (data) => {
+    editNote = (data) => {
         if (data.title !== '' && data.desc !== '') {
             const { notes } = this.state;
             let updatedNotes = notes.map(note => {
                 if (note.id === this.state.showEditFor) {
                     note.title = data.title;
                     note.desc = data.desc;
-                    note.updatedAt = Date.now();
+                    note.updatedAt = Date().split('GMT')[0];
                 }
                 return note;
             });
@@ -187,19 +188,19 @@ class List extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {notes.map((note) =>
-                                    <ListItem key={note.id} data={note} showDelete={this.showDelete} showEditForm={this.showEdit} />
+                                {notes.map((note, index) =>
+                                    <ListItem key={note.id} index={index + 1} data={note} showDelete={this.showDelete} showEditForm={this.showEdit} />
                                 )}
                             </tbody>
                         </table>
                     </div>
                     <Add showForm={this.showAdd} />
-                    {this.state.showAdd ? <AddNote addNote={this.AddNote} /> : null}
-                    {this.state.showEdit ? <EditNote editNote={this.EditNote} /> : null}
-                    {this.state.showDelete ? <DeleteNote delete={this.DeleteNote} cancel={this.cancelDelete} /> : null}
+                    {this.state.showAdd ? <AddNote addNote={this.addNote} /> : null}
+                    {this.state.showEdit ? <EditNote editNote={this.editNote} note={notes.find(note => note.id === this.state.showEditFor)} /> : null}
+                    {this.state.showDelete ? <DeleteNote delete={this.deleteNote} cancel={this.cancelDelete} /> : null}
                 </div>
             </div>
-        )
+        );
     }
 }
 
