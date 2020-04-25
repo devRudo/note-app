@@ -1,62 +1,66 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import ListItem from './ListItem';
-import Add from './Add';
-import AddNote from './AddNote';
-import EditNote from './EditNote';
-import DeleteNote from './DeleteNote';
-import Status from './Status';
-import Search from './Search';
+import Note from './Note';
+import Add from './AddNote/Add';
+import AddNote from './AddNote/AddNote';
+import EditNote from './EditNote/EditNote';
+import DeleteNote from './DeleteNote/DeleteNote';
+import Status from '../Status';
+import Search from '../Search/Search';
+import NoteNotFound from '../NoteNotFound';
 
-class List extends React.Component {
-    state = {
-        showAdd: false,
-        showEdit: false,
-        showEditFor: 0,
-        error: false,
-        message: '',
-        showStatus: false,
-        className: '',
-        showDelete: false,
-        showDeleteFor: 0,
-        searchString: '',
-        notes: [
-            {
-                id: uuidv4(),
-                title: 'First',
-                desc: 'This is first note',
-                createdAt: Date().split('GMT')[0], // getting the idea from siddiah
-                updatedAt: Date().split('GMT')[0]
-            },
-            {
-                id: uuidv4(),
-                title: 'Second',
-                desc: 'This is second note',
-                createdAt: Date().split('GMT')[0],
-                updatedAt: Date().split('GMT')[0]
-            },
-            {
-                id: uuidv4(),
-                title: 'Third',
-                desc: 'This is third note',
-                createdAt: Date().split('GMT')[0],
-                updatedAt: Date().split('GMT')[0]
-            },
-            {
-                id: uuidv4(),
-                title: 'Fourth',
-                desc: 'This is fourth note',
-                createdAt: Date().split('GMT')[0],
-                updatedAt: Date().split('GMT')[0]
-            },
-            {
-                id: uuidv4(),
-                title: 'Fifth',
-                desc: 'This is fifth note',
-                createdAt: Date().split('GMT')[0],
-                updatedAt: Date().split('GMT')[0]
-            },
-        ]
+class Notes extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showAdd: false,
+            showEdit: false,
+            showEditFor: 0,
+            error: '',
+            message: '',
+            showStatus: false,
+            className: '',
+            showDelete: false,
+            showDeleteFor: 0,
+            searchString: '',
+            notes: [
+                // {
+                //     id: uuidv4(),
+                //     title: 'First',
+                //     desc: 'This is first note',
+                //     createdAt: Date().split('GMT')[0], // getting the idea from siddiah
+                //     updatedAt: Date().split('GMT')[0]
+                // },
+                // {
+                //     id: uuidv4(),
+                //     title: 'Second',
+                //     desc: 'This is second note',
+                //     createdAt: Date().split('GMT')[0],
+                //     updatedAt: Date().split('GMT')[0]
+                // },
+                // {
+                //     id: uuidv4(),
+                //     title: 'Third',
+                //     desc: 'This is third note',
+                //     createdAt: Date().split('GMT')[0],
+                //     updatedAt: Date().split('GMT')[0]
+                // },
+                // {
+                //     id: uuidv4(),
+                //     title: 'Fourth',
+                //     desc: 'This is fourth note',
+                //     createdAt: Date().split('GMT')[0],
+                //     updatedAt: Date().split('GMT')[0]
+                // },
+                // {
+                //     id: uuidv4(),
+                //     title: 'Fifth',
+                //     desc: 'This is fifth note',
+                //     createdAt: Date().split('GMT')[0],
+                //     updatedAt: Date().split('GMT')[0]
+                // },
+            ]
+        }
     }
 
     showAdd = () => {
@@ -171,32 +175,20 @@ class List extends React.Component {
             notes = notes.filter(note => note.title.toLowerCase().includes(this.state.searchString.toLowerCase()));
         }
         return (
-            <div className="container">
+            <div className="container-fluid">
                 <Search search={this.search} />
-                <div className="row">
+                <div className="row" style={{ padding: "0 200px" }}>
                     {this.state.showStatus ? < Status className={this.state.className} message={this.state.message} /> : null}
-                    <div className="col-md-12 table-responsive">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Desciption</th>
-                                    <th scope="col">Created At</th>
-                                    <th scope="col">Updated At</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {notes.map((note, index) =>
-                                    <ListItem key={note.id} index={index + 1} data={note} showDelete={this.showDelete} showEditForm={this.showEdit} />
-                                )}
-                            </tbody>
-                        </table>
+                    <div className="col-md-12 mt-4">
+                        <div className="row">
+                            {notes.length ? notes.map((note, index) =>
+                                <Note key={note.id} index={index + 1} data={note} showDelete={this.showDelete} showEditForm={this.showEdit} />
+                            ) : <NoteNotFound />}
+                        </div>
                     </div>
                     <Add showForm={this.showAdd} />
-                    {this.state.showAdd ? <AddNote addNote={this.addNote} /> : null}
-                    {this.state.showEdit ? <EditNote editNote={this.editNote} note={notes.find(note => note.id === this.state.showEditFor)} /> : null}
+                    {this.state.showAdd ? <AddNote addNote={this.addNote} showAdd={this.showAdd} /> : null}
+                    {this.state.showEdit ? <EditNote editNote={this.editNote} showEdit={this.showEdit} note={notes.find(note => note.id === this.state.showEditFor)} /> : null}
                     {this.state.showDelete ? <DeleteNote delete={this.deleteNote} cancel={this.cancelDelete} /> : null}
                 </div>
             </div>
@@ -204,4 +196,4 @@ class List extends React.Component {
     }
 }
 
-export default List;
+export default Notes;

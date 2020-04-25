@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import Header from './Header';
-import List from './List';
+import Header from './Layouts/Header';
+import Notes from './Notes/Notes';
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="App bg-light">
       <Header />
-      <List />
+      <Notes />
     </div>
   );
 }

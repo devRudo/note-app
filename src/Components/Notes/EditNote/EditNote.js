@@ -31,7 +31,7 @@ class EditNote extends React.Component {
         return (
             <form className="form card shadow-lg p-4 editForm" onSubmit={this.submit.bind(this)}>
                 <div className="form-group">
-                    <label htmlFor="title">Title</label>
+                    <label htmlFor="title" className="d-flex justify-content-between">Title <span className="fas fa-times" style={{ cursor: "pointer" }} onClick={this.props.showEdit}></span></label>
                     <input type="text" name="title" itemID="title" className="form-control" placeholder="Add a title for this note ...." onChange={this.onTitleChange.bind(this)} value={this.state.title} autoFocus />
                 </div>
                 <div className="form-group">
