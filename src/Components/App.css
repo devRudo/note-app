@@ -1,5 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c|Orbitron|Quattrocento&display=swap');
+
+.App {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
 .navbar-brand img {
     height: 30px;
+}
+
+#search {
+    border-color: #ced4da;
+}
+
+.form-control:focus{
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.noteOptions{
+    background: #343a40;
+    top: 45px;
+    right: 20px;
+}
+
+.noteOptions i{
+    cursor: pointer;
 }
 
 .form {
